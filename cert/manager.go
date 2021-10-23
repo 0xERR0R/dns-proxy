@@ -49,7 +49,7 @@ func (l *LegoManager) RetrieveCertificate() (*tls.Certificate, error) {
 					log.Errorf("certificate expired at %s", certificate.NotAfter)
 				}
 				expiresInDays := int(certificate.NotAfter.Sub(time.Now()).Hours() / 24)
-				log.Debugf("certificate expiration date: %s, expires in %d days", certificate.NotAfter, expiresInDays)
+				log.Infof("certificate expiration date: %s, expires in %d days", certificate.NotAfter, expiresInDays)
 				return cert, nil
 			}
 		}
