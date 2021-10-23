@@ -11,8 +11,7 @@
 | EMAIL           | me@me.com           | Registration email address for Let's Encrypt|
 | LOG_LEVEL       | debug               | Level to log. One of 'trace, debug, info, warn, error, fatal'. Default: info|
 | PREFERRED_CHAIN | ISRG Root X1        | preferred certificate chain to use. default: "ISRG Root X1" |
-| UPSTREAM_DOH    | http://192.168.178.3:4000/dns-query,https://cloudflare-dns.com/dns-query | Comma separated list of upstream DoH DNS resolvers. Placeholder "_
-CLIENTID_" will be automatically replaced with client id (only TLS from subdomain) |
+| UPSTREAM_DOH    | http://192.168.178.3:4000/dns-query,https://cloudflare-dns.com/dns-query | Comma separated list of upstream DoH DNS resolvers. Placeholder `_CLIENTID_` will be automatically replaced with client id (only TLS from subdomain) |
 | UPSTREAM_RETRY_CNT    | 2 | Number of retry attempts before fallback resolver will be invoked. Default: 2 |
 | UPSTREAM_TIMEOUT    | 1s | timeout for the upstream DoH request. Default: 1s |
 | FALLBACK_DOH    | https://cloudflare-dns.com/dns-query | Fallback upstream DoH server, used if upstream DoH requests fail. Default: https://cloudflare-dns.com/dns-query  |
