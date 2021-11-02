@@ -16,6 +16,7 @@ type ProxyConfig struct {
 	UpstreamRetryAttempts uint          `env:"UPSTREAM_RETRY_CNT" default:"2" usage:"Number of retry attempts before fallback resolver will be invoked"`
 	FallbackDOH           string        `env:"FALLBACK_DOH" default:"https://cloudflare-dns.com/dns-query" usage:"Fallback upstream DoH server, used if upstream DoH requests fail"`
 	UpstreamTimeout       time.Duration `env:"UPSTREAM_TIMEOUT" default:"1s" usage:"timeout for the upstream DoH request"`
+	RenewThresholdDays    uint          `env:"RENEW_THRESHOLD_DAYS" default:"7" usage:"Renew certificate if it expires in X or less days"`
 }
 
 func (p ProxyConfig) String() string {
@@ -27,11 +28,13 @@ func (p ProxyConfig) String() string {
   LogLevel: %s
   UpstreamDOH: %s
   UpstreamRetryAttempts: %d
+  RenewThresholdDays: %d
   FallbackDOH: %s
   UpstreamTimeout: %s`,
 		p.TLSDomain, p.PreferredChain,
 		p.Email, p.DNSProvider,
 		p.CertDir, p.LogLevel,
 		p.UpstreamDOH, p.UpstreamRetryAttempts,
-		p.FallbackDOH, p.UpstreamTimeout)
+		p.RenewThresholdDays, p.FallbackDOH,
+		p.UpstreamTimeout)
 }

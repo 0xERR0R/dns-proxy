@@ -39,18 +39,23 @@ func (l *LegoManager) RetrieveCertificate() (*tls.Certificate, error) {
 		log.Debugf("certificate successful loaded")
 
 		for _, c := range cert.Certificate {
-			certificate, _ := x509.ParseCertificate(c)
-			if !certificate.IsCA {
-				err := certificate.VerifyHostname(l.cfg.TLSDomain)
+			crt, _ := x509.ParseCertificate(c)
+			if !crt.IsCA {
+				err := crt.VerifyHostname(l.cfg.TLSDomain)
 				if err != nil {
 					log.Errorf("certificate is not valid")
 				}
-				if certificate.NotAfter.Before(time.Now()) {
-					log.Errorf("certificate expired at %s", certificate.NotAfter)
+				if crt.NotAfter.Before(time.Now()) {
+					log.Errorf("certificate expired at %s", crt.NotAfter)
 				}
-				expiresInDays := int(certificate.NotAfter.Sub(time.Now()).Hours() / 24)
-				log.Infof("certificate expiration date: %s, expires in %d days", certificate.NotAfter, expiresInDays)
-				return cert, nil
+				expiresInDays := int(crt.NotAfter.Sub(time.Now()).Hours() / 24)
+				log.Infof("certificate expiration date: %s, expires in %d days", crt.NotAfter, expiresInDays)
+				if expiresInDays <= int(l.cfg.RenewThresholdDays) {
+					log.Infof("certificate expires in %d days, this is below the thresold of %d. Renewing now...",
+						expiresInDays, l.cfg.RenewThresholdDays)
+				} else {
+					return cert, nil
+				}
 			}
 		}
 
@@ -101,8 +106,8 @@ func createLegoClient(cfg config.ProxyConfig) (*lego.Client, error) {
 		Email: cfg.Email,
 		key:   privateKey,
 	}
-	config := lego.NewConfig(&myUser)
-	client, err := lego.NewClient(config)
+	c := lego.NewConfig(&myUser)
+	client, err := lego.NewClient(c)
 	if err != nil {
 		return nil, fmt.Errorf("can't create client instance: %w", err)
 	}

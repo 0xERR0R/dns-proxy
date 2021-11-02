@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+const updateInterval = 24 * time.Hour
+
 type Holder interface {
 	GetCertificate() (*tls.Certificate, error)
 }
@@ -28,7 +30,7 @@ func NewRefreshingCertHolder(manager Manager) Holder {
 }
 
 func periodicUpdate(h *RefreshingCertHolder) {
-	ticker := time.NewTicker(24 * time.Hour)
+	ticker := time.NewTicker(updateInterval)
 	defer ticker.Stop()
 
 	for {
