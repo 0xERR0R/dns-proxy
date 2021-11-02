@@ -1,5 +1,8 @@
 # dns-proxy
 
+dns-proxy provides DNS (UDP and TCP) and DoT (DNS-over-TLS) endpoints and redirects all DNS requests to defined DoH
+(DNS-over-HTTPS) server(s).
+
 ## Configuration
 
 | Variable             | Example             | Description                                              |
@@ -21,7 +24,8 @@
 
 dns-proxy as DoT with Let's encrypt certificate and duckdns domain "test.duckdns.org". Uses 2 blocky instances as DoH
 resolver (192.168.178.3 and 192.168.178.5). Clients can use either "test.duckdns.org" for anonymous or "
-XXX.test.duckdns.org" for named access (in this case XXX will be passed to blocky for logging and filtering purposes).
+XXX.test.duckdns.org" for named access (in this case XXX will be passed to blocky as client name for logging and
+filtering purposes).
 
 ```yaml
 version: "2.1"
