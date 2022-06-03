@@ -98,7 +98,7 @@ func createTCPServer() *dns.Server {
 		Net:     "tcp",
 		Handler: dns.NewServeMux(),
 		NotifyStartedFunc: func() {
-			log.Infof("UDP server is up and running")
+			log.Infof("TCP server is up and running")
 		},
 	}
 }
