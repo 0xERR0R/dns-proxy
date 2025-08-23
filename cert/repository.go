@@ -21,7 +21,7 @@ func NewFileRepo(dir string) Repository {
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err := os.Mkdir(dir, 0700)
 		if err != nil {
-			log.Fatal("can't create certificate directory '%s': ", dir, err)
+			log.Fatalf("can't create certificate directory '%s': %v", dir, err)
 		}
 	}
 	return &FileRepository{dir: dir}

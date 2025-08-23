@@ -1,6 +1,6 @@
 module github.com/0xERR0R/dns-proxy
 
-go 1.17
+go 1.24.6
 
 require (
 	github.com/avast/retry-go v3.0.0+incompatible
